@@ -1,1 +1,50 @@
-"use strict";const $="student_not_found";const ee="duplicate_student";const ne="win_not_allowed";window.addEventListener("load",(function(){const e=document.getElementById("tpMsgBlocked");chrome.runtime.sendMessage({action:"notfound"},oe)}));function oe(e){if(chrome.runtime.lastError){console.log("Error while sending message="+chrome.runtime.lastError.message)}if(!e){window.close();return}const n=document.getElementById("reason");switch(e["reason"]){case $:n.innerHTML="The Securly Classroom extension cannot connect because the user logged into this browser "+"profile is not listed in any class roster for the organization.  Once the student is listed in at least "+"one class you can retry by clicking the extension icon. When successful, the warning symbol on the "+"extension will be removed.";break;case ee:n.innerHTML="The Securly Classroom extension cannot connect because the student logged into this browser "+"profile was found in more than one organization in Securly Classroom.  The student can only belong to "+"one organization to participate in class sessions on Mac or Windows devices.";break;default:n.innerHTML="The Securly Classroom extension cannot connect because this Chromebook is not in the device "+"list in Securly Classroom. Once the device is properly shown in the database you can retry by clicking the "+"extension icon. When successful, the warning symbol on the extension will be removed."}const directoryDeviceId=e["directoryDeviceId"];const o=e["serialNumber"];let t="";if(o){t="S/N: "+o}if(directoryDeviceId){t+=" Id: "+directoryDeviceId}document.getElementById("deviceInfo").innerHTML=t}
+"use strict";
+const $ = "student_not_found";
+const ee = "duplicate_student";
+const ne = "win_not_allowed";
+window.addEventListener("load", function () {
+  const e = document.getElementById("tpMsgBlocked");
+  chrome.runtime.sendMessage({ action: "notfound" }, oe);
+});
+function oe(e) {
+  if (chrome.runtime.lastError) {
+    console.log(
+      "Error while sending message=" + chrome.runtime.lastError.message,
+    );
+  }
+  if (!e) {
+    window.close();
+    return;
+  }
+  const n = document.getElementById("reason");
+  switch (e["reason"]) {
+    case $:
+      n.innerHTML =
+        "The Securly Classroom extension cannot connect because the user logged into this browser " +
+        "profile is not listed in any class roster for the organization.  Once the student is listed in at least " +
+        "one class you can retry by clicking the extension icon. When successful, the warning symbol on the " +
+        "extension will be removed.";
+      break;
+    case ee:
+      n.innerHTML =
+        "The Securly Classroom extension cannot connect because the student logged into this browser " +
+        "profile was found in more than one organization in Securly Classroom.  The student can only belong to " +
+        "one organization to participate in class sessions on Mac or Windows devices.";
+      break;
+    default:
+      n.innerHTML =
+        "The Securly Classroom extension cannot connect because this Chromebook is not in the device " +
+        "list in Securly Classroom. Once the device is properly shown in the database you can retry by clicking the " +
+        "extension icon. When successful, the warning symbol on the extension will be removed.";
+  }
+  const directoryDeviceId = e["directoryDeviceId"];
+  const o = e["serialNumber"];
+  let t = "";
+  if (o) {
+    t = "S/N: " + o;
+  }
+  if (directoryDeviceId) {
+    t += " Id: " + directoryDeviceId;
+  }
+  document.getElementById("deviceInfo").innerHTML = t;
+}
